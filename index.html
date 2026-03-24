@@ -18,7 +18,7 @@
             line-height: 1.5;
         }
 
-        /* ---------- MAIN HEADER (English hierarchy + Arabic institution names) ---------- */
+        /* ---------- MAIN HEADER (English hierarchy only, vertical layout) ---------- */
         .academic-header {
             background: linear-gradient(135deg, #0a2b3e 0%, #123b4f 100%);
             color: white;
@@ -26,6 +26,10 @@
             text-align: center;
             border-bottom: 5px solid #e6b422;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
         }
         .main-eng-header {
             font-size: 1.9rem;
@@ -33,34 +37,22 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             font-family: 'Inter', 'Segoe UI', sans-serif;
-            margin-bottom: 0.7rem;
             word-break: keep-all;
-        }
-        .university-name {
-            font-size: 1.65rem;
-            font-weight: 600;
-            font-family: 'Times New Roman', serif;
-            margin: 0.4rem 0 0.2rem;
-            opacity: 0.95;
         }
         .college-name {
             font-size: 1.35rem;
             font-weight: 500;
-            margin: 0.2rem 0;
             letter-spacing: 0.3px;
             border-top: 1px dashed rgba(255,255,240,0.3);
-            display: inline-block;
             padding-top: 0.3rem;
         }
         .dept-name {
             font-size: 1.2rem;
             font-weight: 400;
             background: rgba(230,180,34,0.18);
-            display: inline-block;
             padding: 0.25rem 1rem;
             border-radius: 40px;
             backdrop-filter: blur(2px);
-            margin-top: 0.3rem;
         }
         .designer-line {
             margin-top: 0.9rem;
@@ -69,7 +61,6 @@
             letter-spacing: 0.5px;
             opacity: 0.8;
             border-top: 1px solid rgba(255,215,120,0.4);
-            display: inline-block;
             padding-top: 0.5rem;
             padding-left: 1rem;
             padding-right: 1rem;
@@ -86,13 +77,6 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.1);
             letter-spacing: 2px;
             font-family: 'Impact', 'Inter', sans-serif;
-        }
-        .sub-suggestion {
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            font-weight: 300;
-            margin-top: 0.2rem;
-            color: #e6e9f0;
         }
 
         /* ---------- LAYOUT ---------- */
@@ -334,23 +318,28 @@
             animation: spin 0.7s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .error-message {
+            color: #d32f2f;
+            background: #ffebee;
+            padding: 0.5rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+        }
     </style>
 </head>
 <body>
 
-<!-- ENGLISH HIERARCHY HEADER with full institutional names and designer + big suggestion -->
 <header class="academic-header">
     <div class="main-eng-header">Northern Technical University</div>
     <div class="college-name">Engineering Technical College - Mosul</div>
     <div class="dept-name">Chemical Industries & Petroleum Engineering Technologies</div>
     <div class="designer-line">Designed by: Azzam Essam</div>
     <div class="big-suggestion">📘 SCIENTIFIC SOURCES SUGGESTION</div>
-    <div class="sub-suggestion">AI-powered IEEE citations via Crossref | authentic metadata</div>
 </header>
 
 <div class="container">
     <div class="two-col-grid">
-        <!-- LEFT: Input panel -->
         <div class="card">
             <div class="card-header">
                 <span>📄</span> Academic Paragraphs (≥25 words)
@@ -370,7 +359,6 @@
             </div>
         </div>
 
-        <!-- RIGHT: Output with inline citations -->
         <div class="card">
             <div class="card-header">
                 <span>📑</span> Text with IEEE inline citations [N]
@@ -382,7 +370,6 @@
         </div>
     </div>
 
-    <!-- References section with toggle -->
     <div class="ref-section">
         <div class="ref-header-flex">
             <h2>📚 References (IEEE format)</h2>
@@ -404,29 +391,40 @@
 </div>
 
 <script>
-    // ----------------------- GLOBAL STATE -------------------------
-    let allReferences = [];      // { num, source, matchedKeywords }
+    let allReferences = [];
     let nextCiteNumber = 1;
-    let paragraphsData = [];     // { originalPara, sources: [ {num} ] }
-    let currentView = "ieee";    // "ieee" or "raw"
-    let outputParagraphsWithNumbers = []; // plain text array
+    let paragraphsData = [];
+    let currentView = "ieee";
+    let outputParagraphsWithNumbers = [];
 
-    // Helper: sanitize
-    const safe = (val) => (typeof val === 'string' && val.trim()) ? val.trim() : (Array.isArray(val) && val[0] ? String(val[0]).trim() : null);
+    const safe = (val) => {
+        if (typeof val === 'string' && val.trim()) return val.trim();
+        if (Array.isArray(val) && val.length > 0 && val[0]) return String(val[0]).trim();
+        return null;
+    };
+    
     const delay = ms => new Promise(r => setTimeout(r, ms));
 
-    // ---------- IEEE formatting helpers (plain + HTML) -------------
+    // Improved author formatting with better error handling
     function formatAuthorsIEEE(authorList) {
         if (!Array.isArray(authorList) || authorList.length === 0) return '';
+        
         const getAuthorStr = (a) => {
-            if (a.family) {
-                let given = safe(a.given);
-                let initials = given ? given.split(/[\s\-\.]+/).map(p => p[0].toUpperCase() + '.').join(' ') : '';
-                return initials ? initials + ' ' + a.family : a.family;
+            if (!a) return '';
+            if (a.family && typeof a.family === 'string') {
+                let given = a.given;
+                if (given && typeof given === 'string') {
+                    let initials = given.split(/[\s\-\.]+/).map(p => p[0] ? p[0].toUpperCase() + '.' : '').filter(p => p).join(' ');
+                    return initials ? initials + ' ' + a.family : a.family;
+                }
+                return a.family;
             }
-            return a.name || a.literal || 'Anonymous';
+            if (a.name && typeof a.name === 'string') return a.name;
+            if (a.literal && typeof a.literal === 'string') return a.literal;
+            return '';
         };
-        let authors = authorList.map(getAuthorStr).filter(Boolean);
+        
+        let authors = authorList.map(getAuthorStr).filter(a => a && a.length > 0);
         if (authors.length === 0) return '';
         if (authors.length === 1) return authors[0] + ', ';
         if (authors.length === 2) return authors[0] + ' and ' + authors[1] + ', ';
@@ -437,57 +435,59 @@
     }
 
     function extractYearFromSource(src) {
-        const candidates = [src['published-print'], src['published-online'], src['issued'], src['created']];
-        for (let c of candidates) {
-            let y = c && c['date-parts'] && c['date-parts'][0] && c['date-parts'][0][0];
-            if (y && y > 1000 && y < 2100) return y;
+        try {
+            const candidates = [src['published-print'], src['published-online'], src['issued'], src['created']];
+            for (let c of candidates) {
+                if (c && c['date-parts'] && Array.isArray(c['date-parts']) && c['date-parts'][0] && c['date-parts'][0][0]) {
+                    let y = c['date-parts'][0][0];
+                    if (y && typeof y === 'number' && y > 1000 && y < 2100) return y;
+                }
+            }
+            let match = JSON.stringify(src).match(/\b(19|20)\d{2}\b/);
+            return match ? parseInt(match[0]) : null;
+        } catch(e) {
+            return null;
         }
-        let match = JSON.stringify(src).match(/\b(19|20)\d{2}\b/);
-        return match ? parseInt(match[0]) : null;
     }
 
     function buildIEEEString(src, htmlMode = false) {
-        const authors = formatAuthorsIEEE(src.author);
-        const title = safe(src.title) || safe(src['short-title']) || 'Untitled Article';
-        const container = safe(src['container-title']) || safe(src['short-container-title']) || 'Journal';
-        const volume = safe(src.volume);
-        const issue = safe(src.issue);
-        let pages = '';
-        if (safe(src.page)) pages = 'pp. ' + src.page.replace(/\s+/g, '');
-        else if (safe(src['article-number'])) pages = 'Art. no. ' + src['article-number'];
-        const year = extractYearFromSource(src);
-        let yearStr = year ? year.toString() : 'n.d.';
-        const doi = src.DOI ? src.DOI : null;
+        try {
+            const authors = formatAuthorsIEEE(src.author);
+            let title = safe(src.title) || safe(src['short-title']) || 'Untitled Article';
+            let container = safe(src['container-title']) || safe(src['short-container-title']) || 'Journal';
+            const volume = safe(src.volume);
+            const issue = safe(src.issue);
+            let pages = '';
+            if (safe(src.page)) pages = 'pp. ' + src.page.replace(/\s+/g, '');
+            else if (safe(src['article-number'])) pages = 'Art. no. ' + src['article-number'];
+            const year = extractYearFromSource(src);
+            let yearStr = year ? year.toString() : 'n.d.';
+            const doi = src.DOI ? src.DOI : null;
 
-        let parts = [];
-        if (authors) parts.push(authors);
-        let titlePart = htmlMode ? `“${title},”` : `"${title},"`;
-        parts.push(titlePart);
-        let journalPart = htmlMode ? `<em>${container}</em>` : container;
-        parts.push(journalPart);
-        let volIssue = [];
-        if (volume) volIssue.push(`vol. ${volume}`);
-        if (issue) volIssue.push(`no. ${issue}`);
-        if (pages) volIssue.push(pages);
-        if (volIssue.length) parts.push(volIssue.join(', '));
-        parts.push(yearStr);
-        let citation = parts.join(', ') + '.';
-        if (doi) {
-            let doiLink = htmlMode ? ` doi: <a href="https://doi.org/${doi}" target="_blank">${doi}</a>` : ` doi: ${doi}`;
-            citation += doiLink;
+            let parts = [];
+            if (authors && authors.length > 0) parts.push(authors);
+            let titlePart = htmlMode ? `“${title},”` : `"${title},"`;
+            parts.push(titlePart);
+            let journalPart = htmlMode ? `<em>${container}</em>` : container;
+            parts.push(journalPart);
+            let volIssue = [];
+            if (volume) volIssue.push(`vol. ${volume}`);
+            if (issue) volIssue.push(`no. ${issue}`);
+            if (pages) volIssue.push(pages);
+            if (volIssue.length) parts.push(volIssue.join(', '));
+            parts.push(yearStr);
+            let citation = parts.join(', ') + '.';
+            if (doi) {
+                let doiLink = htmlMode ? ` doi: <a href="https://doi.org/${doi}" target="_blank">${doi}</a>` : ` doi: ${doi}`;
+                citation += doiLink;
+            }
+            return citation;
+        } catch(e) {
+            console.error('Error building IEEE string:', e);
+            return 'Citation information unavailable';
         }
-        return citation;
     }
 
-    function getPlainReference(ref) {
-        return `[${ref.num}] ${buildIEEEString(ref.source, false)}`;
-    }
-
-    function getRawJsonReference(ref) {
-        return `[${ref.num}] RAW JSON:\n${JSON.stringify(ref.source, null, 2)}\nMatched keywords: ${(ref.matchedKeywords || []).slice(0,6).join(', ')}`;
-    }
-
-    // ---------- Crossref API and keyword extraction -------------
     const STOPWORDS = new Set(['the','a','an','and','or','but','in','on','at','to','for','of','with','by','from','as','is','was','are','were','been','be','have','has','had','this','that','these','those','it','its','they','them','their','we','our','us','research','study','paper','article','analysis','results','data','method','approach','technique','used','using','based','show','shown','also','such','more','into','can','about','which','when','many','some','well','each','use','new','high','very','between','both','would','could','should','over','after','being','will','than','other']);
 
     function extractKeywordsFromPara(para) {
@@ -507,7 +507,10 @@
             if (!resp.ok) return [];
             let data = await resp.json();
             return data.message?.items || [];
-        } catch(e) { return []; }
+        } catch(e) { 
+            console.error('Crossref search error:', e);
+            return []; 
+        }
     }
 
     async function enrichWithDOI(doi) {
@@ -516,11 +519,14 @@
             if (!r.ok) return null;
             let d = await r.json();
             return d.message || null;
-        } catch(e) { return null; }
+        } catch(e) { 
+            console.error('DOI enrichment error:', e);
+            return null; 
+        }
     }
 
     function hasValidAuthors(item) {
-        return Array.isArray(item.author) && item.author.length > 0 && item.author.some(a => a.family || a.name);
+        return Array.isArray(item.author) && item.author.length > 0 && item.author.some(a => a && (a.family || a.name));
     }
 
     async function findRelevantSources(keywords, limit=4) {
@@ -552,11 +558,10 @@
         return valid;
     }
 
-    // Main processing pipeline
     async function processTextToCitations() {
         let rawText = document.getElementById('inputText').value.trim();
         if (!rawText) {
-            document.getElementById('statusMsg').innerText = '⚠️ Please enter academic paragraphs.';
+            document.getElementById('statusMsg').innerHTML = '⚠️ Please enter academic paragraphs.';
             return;
         }
         let startVal = parseInt(document.getElementById('startNum').value, 10);
@@ -575,15 +580,15 @@
         try {
             let paragraphs = splitParagraphsByLength(rawText);
             if (paragraphs.length === 0) throw new Error('No valid paragraphs (>=20 words) found.');
-            statusSpan.innerText = `✅ ${paragraphs.length} paragraph(s) found. Analyzing keywords...`;
+            statusSpan.innerHTML = `✅ ${paragraphs.length} paragraph(s) found. Analyzing keywords...`;
             progressFill.style.width = '12%';
             
             let newParagraphData = [];
-            let totalRefMap = new Map(); // doi -> {num, source}
+            let totalRefMap = new Map();
             
             for (let idx = 0; idx < paragraphs.length; idx++) {
                 let para = paragraphs[idx];
-                statusSpan.innerText = `📖 Processing ${idx+1}/${paragraphs.length} : extracting concepts...`;
+                statusSpan.innerHTML = `📖 Processing ${idx+1}/${paragraphs.length} : extracting concepts...`;
                 let keywords = extractKeywordsFromPara(para);
                 if (keywords.length < 2) keywords = [...keywords, 'science', 'technology'];
                 progressFill.style.width = 12 + (idx / paragraphs.length) * 45 + '%';
@@ -610,7 +615,6 @@
             }
             paragraphsData = newParagraphData;
             
-            // Build output with inline numbers
             let outputLines = [];
             for (let p of paragraphsData) {
                 let nums = p.citations.map(c => `[${c.num}]`).join(' ');
@@ -620,13 +624,12 @@
             outputParagraphsWithNumbers = outputLines;
             document.getElementById('outputWithCitations').innerHTML = outputLines.map(line => `<div style="margin-bottom: 1rem;">${escapeHtml(line)}</div>`).join('');
             
-            // Render references
             renderReferencesView();
-            statusSpan.innerText = `✔️ Done! ${allReferences.length} unique references extracted. Citations start from [${startVal}].`;
+            statusSpan.innerHTML = `✔️ Done! ${allReferences.length} unique references extracted. Citations start from [${startVal}].`;
             progressFill.style.width = '100%';
             setTimeout(()=> { progressFill.style.width = '0%'; }, 800);
         } catch (err) {
-            statusSpan.innerText = `❌ Error: ${err.message}`;
+            statusSpan.innerHTML = `❌ Error: ${err.message}`;
             console.error(err);
         } finally {
             processBtn.disabled = false;
@@ -635,13 +638,12 @@
     }
     
     function escapeHtml(str) {
+        if (!str) return '';
         return str.replace(/[&<>]/g, function(m) {
             if (m === '&') return '&amp;';
             if (m === '<') return '&lt;';
             if (m === '>') return '&gt;';
             return m;
-        }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-            return c;
         });
     }
     
@@ -676,7 +678,7 @@
         return plain.trim();
     }
     
-    function copyToClipboard(text, btnElement, originalLabel) {
+    function copyToClipboard(text, btnElement) {
         if (!text) return;
         navigator.clipboard.writeText(text).then(() => {
             let old = btnElement.innerHTML;
@@ -685,25 +687,24 @@
         }).catch(() => alert("Could not copy"));
     }
     
-    // ----- EVENT HANDLERS -------
     document.getElementById('processBtn').addEventListener('click', processTextToCitations);
     document.getElementById('clearBtn').addEventListener('click', () => {
         document.getElementById('inputText').value = '';
         document.getElementById('outputWithCitations').innerHTML = 'Processed paragraphs with citation numbers will appear here.';
         document.getElementById('referencesContainer').innerHTML = '<div style="color:#7c6b55; text-align:center; padding:2rem;">✨ No references yet — run extraction.</div>';
         allReferences = []; paragraphsData = []; nextCiteNumber = 1;
-        document.getElementById('statusMsg').innerText = 'Cleared. Ready.';
+        document.getElementById('statusMsg').innerHTML = 'Cleared. Ready.';
         document.getElementById('progressFill').style.width = '0%';
     });
     document.getElementById('copyTextBtn').addEventListener('click', function() {
         let finalText = outputParagraphsWithNumbers.join('\n\n');
         if (!finalText) { alert('No processed text yet.'); return; }
-        copyToClipboard(finalText, this, '📋 Copy Text');
+        copyToClipboard(finalText, this);
     });
     document.getElementById('copyRefBtn').addEventListener('click', function() {
         let refPlain = getPlainAllReferences();
         if (!refPlain) { alert('No references to copy'); return; }
-        copyToClipboard(refPlain, this, '📋 Copy references');
+        copyToClipboard(refPlain, this);
     });
     document.getElementById('toggleIEEE').addEventListener('click', () => {
         currentView = 'ieee';
@@ -718,7 +719,6 @@
         renderReferencesView();
     });
     
-    // sample text hint for demonstration
     const sample = "The application of artificial intelligence in chemical engineering enhances process optimization. Neural networks predict distillation column efficiency with high accuracy, reducing energy consumption. \n\nPetroleum refining relies heavily on advanced catalytic cracking. Recent studies show that machine learning models improve yield predictions and catalyst lifespan. These innovations lead to sustainable operations.";
     document.getElementById('inputText').placeholder = sample;
 </script>
