@@ -18,7 +18,7 @@
             line-height: 1.5;
         }
 
-        /* ---------- MAIN HEADER (English hierarchy + Arabic institution names) ---------- */
+        /* ---------- MAIN HEADER (English hierarchy only, vertical layout) ---------- */
         .academic-header {
             background: linear-gradient(135deg, #0a2b3e 0%, #123b4f 100%);
             color: white;
@@ -26,6 +26,11 @@
             text-align: center;
             border-bottom: 5px solid #e6b422;
             box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            /* Force vertical layout */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
         }
         .main-eng-header {
             font-size: 1.9rem;
@@ -33,34 +38,22 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             font-family: 'Inter', 'Segoe UI', sans-serif;
-            margin-bottom: 0.7rem;
             word-break: keep-all;
-        }
-        .university-name {
-            font-size: 1.65rem;
-            font-weight: 600;
-            font-family: 'Times New Roman', serif;
-            margin: 0.4rem 0 0.2rem;
-            opacity: 0.95;
         }
         .college-name {
             font-size: 1.35rem;
             font-weight: 500;
-            margin: 0.2rem 0;
             letter-spacing: 0.3px;
             border-top: 1px dashed rgba(255,255,240,0.3);
-            display: inline-block;
             padding-top: 0.3rem;
         }
         .dept-name {
             font-size: 1.2rem;
             font-weight: 400;
             background: rgba(230,180,34,0.18);
-            display: inline-block;
             padding: 0.25rem 1rem;
             border-radius: 40px;
             backdrop-filter: blur(2px);
-            margin-top: 0.3rem;
         }
         .designer-line {
             margin-top: 0.9rem;
@@ -69,7 +62,6 @@
             letter-spacing: 0.5px;
             opacity: 0.8;
             border-top: 1px solid rgba(255,215,120,0.4);
-            display: inline-block;
             padding-top: 0.5rem;
             padding-left: 1rem;
             padding-right: 1rem;
@@ -86,13 +78,6 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.1);
             letter-spacing: 2px;
             font-family: 'Impact', 'Inter', sans-serif;
-        }
-        .sub-suggestion {
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            font-weight: 300;
-            margin-top: 0.2rem;
-            color: #e6e9f0;
         }
 
         /* ---------- LAYOUT ---------- */
