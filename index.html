@@ -18,7 +18,6 @@
             line-height: 1.5;
         }
 
-        /* ---------- MAIN HEADER (English hierarchy only, vertical layout) ---------- */
         .academic-header {
             background: linear-gradient(135deg, #0a2b3e 0%, #123b4f 100%);
             color: white;
@@ -79,7 +78,6 @@
             font-family: 'Impact', 'Inter', sans-serif;
         }
 
-        /* ---------- LAYOUT ---------- */
         .container {
             max-width: 1440px;
             margin: 2rem auto;
@@ -319,12 +317,23 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
         
-        .error-message {
-            color: #d32f2f;
-            background: #ffebee;
-            padding: 0.5rem;
-            border-radius: 8px;
-            margin: 0.5rem 0;
+        .heading-style {
+            font-weight: 700;
+            color: #1e3b4a;
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        .subheading-style {
+            font-weight: 600;
+            color: #2c5a6e;
+            margin-top: 0.75rem;
+            margin-bottom: 0.25rem;
+            font-size: 1rem;
+        }
+        .paragraph-text {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
         }
     </style>
 </head>
@@ -342,10 +351,10 @@
     <div class="two-col-grid">
         <div class="card">
             <div class="card-header">
-                <span>📄</span> Academic Paragraphs (≥25 words)
+                <span>📄</span> Academic Text (Preserves Headings & Structure)
             </div>
             <div class="card-content">
-                <textarea id="inputText" rows="8" placeholder="Paste your scientific paragraphs here (each separated by blank line or newline). Example:&#10;&#10;Machine learning applications in petrochemical engineering have revolutionized catalyst design. Recent advances in neural networks enable accurate prediction of reaction yields, optimizing industrial processes...&#10;&#10;Digital twins in oil refining facilities provide real-time simulation and predictive maintenance, reducing operational costs and improving safety margins..."></textarea>
+                <textarea id="inputText" rows="12" placeholder="Paste your scientific text with headings here.&#10;&#10;Example:&#10;Chapter Title: Reducing Marine Pollution Using Technology&#10;&#10;1. Introduction&#10;Marine pollution represents one of the most pressing environmental challenges..."></textarea>
                 <div class="controls">
                     <div class="start-num-control">
                         <label>🔢 Start citation [N] from:</label>
@@ -354,7 +363,7 @@
                     <button id="processBtn">🔍 Extract & Cite (IEEE)</button>
                     <button id="clearBtn" class="secondary">🗑 Clear all</button>
                 </div>
-                <div class="status-msg" id="statusMsg">Ready. Enter paragraphs and click "Extract & Cite".</div>
+                <div class="status-msg" id="statusMsg">Ready. Enter text and click "Extract & Cite".</div>
                 <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
             </div>
         </div>
@@ -365,7 +374,7 @@
                 <button id="copyTextBtn" class="copy-icon-btn" style="margin-left:auto; background:#b68b40;">📋 Copy Text</button>
             </div>
             <div class="card-content">
-                <div class="output-area" id="outputWithCitations" style="min-height: 320px; overflow-y: auto;">Processed paragraphs with citation numbers will appear here.</div>
+                <div class="output-area" id="outputWithCitations" style="min-height: 320px; overflow-y: auto;">Processed text with citation numbers will appear here (headings preserved, NO citations on headings).</div>
             </div>
         </div>
     </div>
@@ -385,7 +394,7 @@
             <div style="color:#7c6b55; text-align:center; padding:2rem;">✨ No references yet — run extraction to fetch real scientific sources from Crossref.</div>
         </div>
         <div class="footer-note">
-            ⚡ IEEE Citation builder | Crossref API (real journal articles) | Suggestion engine based on your text keywords
+            ⚡ IEEE Citation builder | Crossref API | Preserves all headings | NO citations on headings
         </div>
     </div>
 </div>
@@ -393,9 +402,9 @@
 <script>
     let allReferences = [];
     let nextCiteNumber = 1;
-    let paragraphsData = [];
+    let segmentsData = [];
     let currentView = "ieee";
-    let outputParagraphsWithNumbers = [];
+    let outputSegmentsWithNumbers = [];
 
     const safe = (val) => {
         if (typeof val === 'string' && val.trim()) return val.trim();
@@ -405,7 +414,6 @@
     
     const delay = ms => new Promise(r => setTimeout(r, ms));
 
-    // Improved author formatting with better error handling
     function formatAuthorsIEEE(authorList) {
         if (!Array.isArray(authorList) || authorList.length === 0) return '';
         
@@ -490,8 +498,8 @@
 
     const STOPWORDS = new Set(['the','a','an','and','or','but','in','on','at','to','for','of','with','by','from','as','is','was','are','were','been','be','have','has','had','this','that','these','those','it','its','they','them','their','we','our','us','research','study','paper','article','analysis','results','data','method','approach','technique','used','using','based','show','shown','also','such','more','into','can','about','which','when','many','some','well','each','use','new','high','very','between','both','would','could','should','over','after','being','will','than','other']);
 
-    function extractKeywordsFromPara(para) {
-        const words = para.toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/);
+    function extractKeywordsFromText(text) {
+        const words = text.toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/);
         let freq = {};
         words.forEach(w => {
             if (w.length > 3 && !STOPWORDS.has(w)) freq[w] = (freq[w] || 0) + 1;
@@ -529,8 +537,8 @@
         return Array.isArray(item.author) && item.author.length > 0 && item.author.some(a => a && (a.family || a.name));
     }
 
-    async function findRelevantSources(keywords, limit=4) {
-        let results = await searchCrossrefByKeywords(keywords, 8);
+    async function findRelevantSources(keywords, limit=3) {
+        let results = await searchCrossrefByKeywords(keywords, 6);
         let validItems = [];
         let seenDoi = new Set();
         for (let item of results) {
@@ -551,81 +559,232 @@
         return validItems;
     }
 
-    function splitParagraphsByLength(fullText) {
-        let paras = fullText.split(/\n\s*\n/).flatMap(block => block.split(/\n/).map(l=>l.trim()).filter(l=>l.length>0));
-        let valid = paras.filter(p => p.split(/\s+/).length >= 20);
-        if(valid.length === 0 && paras.length) valid = paras.slice(0,2);
-        return valid;
+    // Improved function to detect if a line is a heading (with high accuracy)
+    function isHeadingLine(line) {
+        let trimmed = line.trim();
+        
+        // Empty lines are not headings
+        if (trimmed === "") return false;
+        
+        // Pattern 1: Numbered headings like "1.", "1.1", "2.5", "1. Introduction", "2.1 Wireless Sensor Networks"
+        if (trimmed.match(/^(\d+(\.\d+)*\.?)\s+[A-Za-z]/)) {
+            return true;
+        }
+        
+        // Pattern 2: Chapter titles like "Chapter Title: ..."
+        if (trimmed.match(/^(Chapter|Section)\s+\d+\.?\s*:/i)) {
+            return true;
+        }
+        
+        // Pattern 3: Layer titles like "Layer 1: Sensing Layer", "Layer 2: Communication Layer"
+        if (trimmed.match(/^(Layer|Level)\s+\d+:/i)) {
+            return true;
+        }
+        
+        // Pattern 4: Titles that end with colon and are short (like "Computer Vision Models:")
+        if (trimmed.match(/^[A-Z][a-z]+(\s+[A-Z][a-z]+)*\s*:$/) && trimmed.length < 60) {
+            return true;
+        }
+        
+        // Pattern 5: Short titles (less than 50 chars, less than 6 words, starts with capital, no period at end)
+        if (trimmed.length < 50 && 
+            trimmed.split(/\s+/).length <= 6 && 
+            !trimmed.endsWith('.') &&
+            !trimmed.includes('[') &&
+            trimmed.match(/^[A-Z]/) &&
+            !trimmed.match(/^(the|a|an|in|on|at|for|with|by|from)\s/i)) {
+            return true;
+        }
+        
+        // Pattern 6: All caps titles like "INTRODUCTION" or "WIRELESS SENSOR NETWORKS"
+        if (trimmed === trimmed.toUpperCase() && trimmed.length > 3 && trimmed.length < 60 && trimmed.split(/\s+/).length <= 8) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    // Split text while preserving each line/segment
+    function splitIntoLinesPreservingStructure(fullText) {
+        let lines = fullText.split(/\r?\n/);
+        let segments = [];
+        let currentSegment = "";
+        
+        for (let i = 0; i < lines.length; i++) {
+            let line = lines[i];
+            let trimmedLine = line.trim();
+            
+            // Skip empty lines - they act as separators
+            if (trimmedLine === "") {
+                if (currentSegment !== "") {
+                    segments.push(currentSegment);
+                    currentSegment = "";
+                }
+                continue;
+            }
+            
+            // Check if this line is a heading
+            let isHeading = isHeadingLine(line);
+            
+            // If this is a heading and we have a current segment, save it first
+            if (isHeading && currentSegment !== "") {
+                segments.push(currentSegment);
+                currentSegment = trimmedLine;
+            }
+            // If this is a heading and no current segment, start new
+            else if (isHeading && currentSegment === "") {
+                currentSegment = trimmedLine;
+            }
+            // Otherwise, append to current segment
+            else {
+                if (currentSegment === "") {
+                    currentSegment = trimmedLine;
+                } else {
+                    currentSegment += " " + trimmedLine;
+                }
+            }
+        }
+        
+        // Add the last segment if exists
+        if (currentSegment !== "") {
+            segments.push(currentSegment);
+        }
+        
+        return segments;
     }
 
     async function processTextToCitations() {
         let rawText = document.getElementById('inputText').value.trim();
         if (!rawText) {
-            document.getElementById('statusMsg').innerHTML = '⚠️ Please enter academic paragraphs.';
+            document.getElementById('statusMsg').innerHTML = '⚠️ Please enter academic text.';
             return;
         }
         let startVal = parseInt(document.getElementById('startNum').value, 10);
         if (isNaN(startVal) || startVal < 1) startVal = 1;
         nextCiteNumber = startVal;
         allReferences = [];
-        paragraphsData = [];
+        segmentsData = [];
         
         const progressFill = document.getElementById('progressFill');
         const statusSpan = document.getElementById('statusMsg');
         const processBtn = document.getElementById('processBtn');
         processBtn.disabled = true;
-        processBtn.innerHTML = '<span class="spinner"></span> Searching & Citing...';
+        processBtn.innerHTML = '<span class="spinner"></span> Processing & Searching...';
         progressFill.style.width = '5%';
         
         try {
-            let paragraphs = splitParagraphsByLength(rawText);
-            if (paragraphs.length === 0) throw new Error('No valid paragraphs (>=20 words) found.');
-            statusSpan.innerHTML = `✅ ${paragraphs.length} paragraph(s) found. Analyzing keywords...`;
-            progressFill.style.width = '12%';
+            // Split text while preserving headings as separate segments
+            let segments = splitIntoLinesPreservingStructure(rawText);
             
-            let newParagraphData = [];
+            if (segments.length === 0) throw new Error('No text segments found.');
+            statusSpan.innerHTML = `📄 ${segments.length} segments detected. Analyzing...`;
+            progressFill.style.width = '10%';
+            
+            let newSegmentsData = [];
             let totalRefMap = new Map();
             
-            for (let idx = 0; idx < paragraphs.length; idx++) {
-                let para = paragraphs[idx];
-                statusSpan.innerHTML = `📖 Processing ${idx+1}/${paragraphs.length} : extracting concepts...`;
-                let keywords = extractKeywordsFromPara(para);
-                if (keywords.length < 2) keywords = [...keywords, 'science', 'technology'];
-                progressFill.style.width = 12 + (idx / paragraphs.length) * 45 + '%';
+            for (let idx = 0; idx < segments.length; idx++) {
+                let segment = segments[idx];
                 
-                let sources = await findRelevantSources(keywords, 4);
-                await delay(220);
-                let citationsForPara = [];
+                // Check if this segment is a heading (using the improved function)
+                let isHeading = isHeadingLine(segment);
+                
+                if (isHeading) {
+                    // Headings get NO citations
+                    newSegmentsData.push({ 
+                        text: segment, 
+                        citations: [], 
+                        isHeading: true,
+                        keywords: []
+                    });
+                    statusSpan.innerHTML = `📌 Preserving heading ${idx+1}/${segments.length}: ${segment.substring(0, 50)}...`;
+                    continue;
+                }
+                
+                // For regular text segments (paragraphs), check if it's a short text that shouldn't get citations
+                let wordCount = segment.split(/\s+/).length;
+                
+                // If it's too short (less than 15 words), treat as subheading or short description - NO citations
+                if (wordCount < 15) {
+                    newSegmentsData.push({ 
+                        text: segment, 
+                        citations: [], 
+                        isHeading: false,
+                        isShort: true,
+                        keywords: []
+                    });
+                    continue;
+                }
+                
+                // This is a proper paragraph - extract keywords and find sources
+                statusSpan.innerHTML = `🔍 Processing paragraph ${idx+1}/${segments.length}...`;
+                
+                let keywords = extractKeywordsFromText(segment);
+                if (keywords.length < 2) keywords = [...keywords, 'science', 'technology', 'marine', 'pollution', 'environmental'];
+                progressFill.style.width = 10 + (idx / segments.length) * 70 + '%';
+                
+                let sources = await findRelevantSources(keywords, 3);
+                await delay(150);
+                
+                let citationsForSegment = [];
                 for (let srcItem of sources) {
                     let doiKey = srcItem.source.DOI;
                     let existingRef = null;
                     if (doiKey) existingRef = totalRefMap.get(doiKey);
                     if (existingRef) {
-                        citationsForPara.push({ num: existingRef.num });
+                        citationsForSegment.push({ num: existingRef.num });
                     } else {
                         let newNum = nextCiteNumber++;
                         let newRef = { num: newNum, source: srcItem.source, matchedKeywords: srcItem.matchedKeywords };
                         allReferences.push(newRef);
                         if (doiKey) totalRefMap.set(doiKey, newRef);
-                        citationsForPara.push({ num: newNum });
+                        citationsForSegment.push({ num: newNum });
                     }
                 }
-                newParagraphData.push({ para: para, citations: citationsForPara, keywords: keywords });
-                progressFill.style.width = 12 + ((idx+1) / paragraphs.length) * 55 + '%';
+                
+                newSegmentsData.push({ 
+                    text: segment, 
+                    citations: citationsForSegment, 
+                    isHeading: false,
+                    isShort: false,
+                    keywords: keywords 
+                });
+                progressFill.style.width = 10 + ((idx+1) / segments.length) * 70 + '%';
             }
-            paragraphsData = newParagraphData;
             
+            segmentsData = newSegmentsData;
+            
+            // Build output with preserved structure
             let outputLines = [];
-            for (let p of paragraphsData) {
-                let nums = p.citations.map(c => `[${c.num}]`).join(' ');
-                let suffix = nums.length ? ` ${nums}` : '';
-                outputLines.push(p.para + suffix);
+            for (let seg of segmentsData) {
+                if (seg.isHeading) {
+                    outputLines.push(seg.text);
+                } else {
+                    // Only add citations if it's not a short segment and has citations
+                    let nums = seg.citations.map(c => `[${c.num}]`).join(' ');
+                    let suffix = (nums.length && seg.citations.length > 0) ? ` ${nums}` : '';
+                    outputLines.push(seg.text + suffix);
+                }
             }
-            outputParagraphsWithNumbers = outputLines;
-            document.getElementById('outputWithCitations').innerHTML = outputLines.map(line => `<div style="margin-bottom: 1rem;">${escapeHtml(line)}</div>`).join('');
+            outputSegmentsWithNumbers = outputLines;
+            
+            // Display with formatting
+            let displayHtml = outputLines.map(line => {
+                // Check if line looks like a heading for styling
+                if (isHeadingLine(line)) {
+                    if (line.match(/^(\d+(\.\d+)*\.?)\s+[A-Za-z]/)) {
+                        return `<div class="heading-style">${escapeHtml(line)}</div>`;
+                    } else if (line.match(/^(Layer|Chapter|Section)\s+\d+:/i)) {
+                        return `<div class="subheading-style">${escapeHtml(line)}</div>`;
+                    }
+                    return `<div class="subheading-style">${escapeHtml(line)}</div>`;
+                }
+                return `<div class="paragraph-text">${escapeHtml(line)}</div>`;
+            }).join('');
+            document.getElementById('outputWithCitations').innerHTML = displayHtml;
             
             renderReferencesView();
-            statusSpan.innerHTML = `✔️ Done! ${allReferences.length} unique references extracted. Citations start from [${startVal}].`;
+            statusSpan.innerHTML = `✅ Done! ${allReferences.length} unique references extracted. ${segmentsData.filter(s => !s.isHeading && s.citations.length > 0).length} paragraphs cited. Headings preserved with NO citations.`;
             progressFill.style.width = '100%';
             setTimeout(()=> { progressFill.style.width = '0%'; }, 800);
         } catch (err) {
@@ -690,15 +849,15 @@
     document.getElementById('processBtn').addEventListener('click', processTextToCitations);
     document.getElementById('clearBtn').addEventListener('click', () => {
         document.getElementById('inputText').value = '';
-        document.getElementById('outputWithCitations').innerHTML = 'Processed paragraphs with citation numbers will appear here.';
+        document.getElementById('outputWithCitations').innerHTML = 'Processed text with citation numbers will appear here (headings preserved, NO citations on headings).';
         document.getElementById('referencesContainer').innerHTML = '<div style="color:#7c6b55; text-align:center; padding:2rem;">✨ No references yet — run extraction.</div>';
-        allReferences = []; paragraphsData = []; nextCiteNumber = 1;
+        allReferences = []; segmentsData = []; nextCiteNumber = 1;
         document.getElementById('statusMsg').innerHTML = 'Cleared. Ready.';
         document.getElementById('progressFill').style.width = '0%';
     });
     document.getElementById('copyTextBtn').addEventListener('click', function() {
-        let finalText = outputParagraphsWithNumbers.join('\n\n');
-        if (!finalText) { alert('No processed text yet.'); return; }
+        let finalText = outputSegmentsWithNumbers.join('\n\n');
+        if (!finalText || finalText.includes('Processed text')) { alert('No processed text yet.'); return; }
         copyToClipboard(finalText, this);
     });
     document.getElementById('copyRefBtn').addEventListener('click', function() {
@@ -718,9 +877,6 @@
         document.getElementById('toggleIEEE').classList.remove('active');
         renderReferencesView();
     });
-    
-    const sample = "The application of artificial intelligence in chemical engineering enhances process optimization. Neural networks predict distillation column efficiency with high accuracy, reducing energy consumption. \n\nPetroleum refining relies heavily on advanced catalytic cracking. Recent studies show that machine learning models improve yield predictions and catalyst lifespan. These innovations lead to sustainable operations.";
-    document.getElementById('inputText').placeholder = sample;
 </script>
 </body>
 </html>
