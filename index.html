@@ -163,7 +163,7 @@
             font-family: 'Georgia', serif;
             font-size: 0.8rem;
             white-space: pre-wrap;
-            line-height: 1.5;
+            line-height: 1.6;
             max-height: 500px;
             overflow-y: auto;
         }
@@ -282,6 +282,7 @@
         }
         .paragraph-text {
             margin-bottom: 0.5rem;
+            line-height: 1.6;
         }
     </style>
 </head>
@@ -292,7 +293,7 @@
     <div class="college-name">Engineering Technical College - Mosul</div>
     <div class="dept-name">Chemical Industries & Petroleum Engineering Technologies</div>
     <div class="designer-line">Designed by: Azzam Essam</div>
-    <div class="big-suggestion">cientific references suggestion</div>
+    <div class="big-suggestion">📘 IEEE CITATION BUILDER</div>
 </header>
 
 <div class="container">
@@ -322,15 +323,15 @@
                     <button id="processBtn">🔍 Extract & Cite</button>
                     <button id="clearBtn" class="secondary">🗑 Clear</button>
                 </div>
-                <div class="status-msg" id="statusMsg">Ready. Click "Extract & Cite" to get references.</div>
+                <div class="status-msg" id="statusMsg">Ready. Citations will be placed after each sentence (IEEE standard).</div>
                 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-header">📑 Text with Citations <button id="copyTextBtn" class="copy-icon-btn" style="float:right; margin-top:-2px;">📋 Copy</button></div>
+            <div class="card-header">📑 Text with Citations (After Each Sentence) <button id="copyTextBtn" class="copy-icon-btn" style="float:right; margin-top:-2px;">📋 Copy</button></div>
             <div class="card-content">
-                <div class="output-area" id="outputWithCitations">Processed text will appear here.<br>Headings preserved, citations only on paragraphs.</div>
+                <div class="output-area" id="outputWithCitations">Processed text will appear here.<br>Citations are placed after each sentence that ends with a period.</div>
             </div>
         </div>
     </div>
@@ -347,7 +348,7 @@
             </div>
         </div>
         <div id="referencesContainer" class="ref-list">✨ No references yet — click "Extract & Cite"</div>
-        <div class="footer-note">⚡ Crossref API | Filters: Year ≥ selected | Custom sources per paragraph</div>
+        <div class="footer-note">⚡ Crossref API | Citations placed after each sentence (academic standard) | Headings have no citations</div>
     </div>
 </div>
 
@@ -440,7 +441,6 @@
         return Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,8).map(e=>e[0]);
     }
 
-    // Improved search function with retry and better query
     async function searchCrossref(keywords, maxResults, minYear) {
         let mainKeywords = keywords.slice(0, 4);
         if (mainKeywords.length === 0) mainKeywords = ['marine', 'pollution', 'technology'];
@@ -454,7 +454,6 @@
             let data = await resp.json();
             let items = data.message?.items || [];
             
-            // Filter by year locally for better accuracy
             let filtered = items.filter(item => {
                 if (!minYear) return true;
                 let year = extractYearFromSource(item);
@@ -478,7 +477,6 @@
             let doi = item.DOI;
             if (!doi || seen.has(doi)) continue;
             
-            // Check if has valid authors
             let hasAuthors = Array.isArray(item.author) && item.author.length > 0 && item.author.some(a => a.family || a.name);
             
             if (hasAuthors) {
@@ -488,7 +486,6 @@
             await delay(50);
         }
         
-        // If not enough results, try with broader keywords
         if (valid.length < limit && keywords.length > 2) {
             let broader = keywords.slice(0, 2);
             let moreResults = await searchCrossref(broader, limit - valid.length + 2, minYear);
@@ -516,6 +513,44 @@
         if (t.length < 50 && t.split(/\s+/).length <= 6 && !t.endsWith('.') && !t.includes('[') && t.match(/^[A-Z]/)) return true;
         if (t === t.toUpperCase() && t.length > 3 && t.length < 60 && t.split(/\s+/).length <= 8) return true;
         return false;
+    }
+
+    // NEW FUNCTION: Split paragraph into sentences and distribute citations
+    function distributeCitationsToSentences(paragraph, citationsList) {
+        if (!citationsList || citationsList.length === 0) {
+            return paragraph;
+        }
+        
+        // Split into sentences (by period followed by space)
+        let sentences = paragraph.match(/[^.!?]+[.!?]+/g) || [paragraph];
+        
+        // Clean up sentences
+        sentences = sentences.map(s => s.trim()).filter(s => s.length > 0);
+        
+        if (sentences.length === 0) return paragraph;
+        
+        // Distribute citations evenly across sentences
+        let result = [];
+        let citationIndex = 0;
+        let totalCitations = citationsList.length;
+        
+        for (let i = 0; i < sentences.length; i++) {
+            let sentence = sentences[i];
+            let wordCount = sentence.split(/\s+/).length;
+            
+            // Skip very short sentences (less than 5 words) - they don't get citations
+            if (wordCount < 5) {
+                result.push(sentence);
+                continue;
+            }
+            
+            // Assign citation to this sentence (cycle through available citations)
+            let citationNum = citationsList[citationIndex % totalCitations].num;
+            result.push(sentence + ` [${citationNum}]`);
+            citationIndex++;
+        }
+        
+        return result.join(' ');
     }
 
     function splitIntoSegments(text) {
@@ -563,7 +598,7 @@
         progressFill.style.width = '5%';
         
         try {
-            statusSpan.innerHTML = `📅 Year ≥ ${minYear} | 📚 ${sourcesPerPara} sources/paragraph | Searching...`;
+            statusSpan.innerHTML = `📅 Year ≥ ${minYear} | 📚 ${sourcesPerPara} sources/paragraph | Citations after each sentence...`;
             
             let segments = splitIntoSegments(rawText);
             statusSpan.innerHTML = `📄 ${segments.length} segments found. Processing...`;
@@ -613,7 +648,15 @@
                     }
                 }
                 
-                newSegments.push({ text: seg, citations: citations, isHeading: false });
+                // NEW: Distribute citations to sentences within the paragraph
+                let processedText = distributeCitationsToSentences(seg, citations);
+                
+                newSegments.push({ 
+                    text: processedText, 
+                    citations: citations, 
+                    originalText: seg,
+                    isHeading: false 
+                });
             }
             
             segmentsData = newSegments;
@@ -623,8 +666,7 @@
                 if (seg.isHeading) {
                     outputLines.push(seg.text);
                 } else {
-                    let nums = seg.citations.map(c => `[${c.num}]`).join(' ');
-                    outputLines.push(seg.text + (nums ? ' ' + nums : ''));
+                    outputLines.push(seg.text);
                 }
             }
             outputSegmentsWithNumbers = outputLines;
@@ -643,7 +685,7 @@
             
             renderReferences();
             
-            statusSpan.innerHTML = `✅ Done! ${allReferences.length} unique references found. ${paraCount} paragraphs cited. Year ≥ ${minYear}, ${sourcesPerPara} sources/paragraph.`;
+            statusSpan.innerHTML = `✅ Done! ${allReferences.length} unique references. Citations placed after each sentence (IEEE standard). ${paraCount} paragraphs processed.`;
             progressFill.style.width = '100%';
             setTimeout(() => { progressFill.style.width = '0%'; }, 500);
             
@@ -706,7 +748,7 @@
     document.getElementById('processBtn').addEventListener('click', processText);
     document.getElementById('clearBtn').addEventListener('click', () => {
         document.getElementById('inputText').value = '';
-        document.getElementById('outputWithCitations').innerHTML = 'Processed text will appear here.';
+        document.getElementById('outputWithCitations').innerHTML = 'Processed text will appear here.<br>Citations are placed after each sentence that ends with a period.';
         document.getElementById('referencesContainer').innerHTML = '✨ No references yet — click "Extract & Cite"';
         allReferences = []; segmentsData = [];
         document.getElementById('statusMsg').innerHTML = 'Cleared. Ready.';
@@ -733,9 +775,6 @@
         document.getElementById('toggleIEEE').classList.remove('active');
         renderReferences();
     });
-    
-    // Set example
-    document.getElementById('inputText').placeholder = '1. Introduction\nMarine pollution is a critical environmental challenge...\n\n2.1 Wireless Sensor Networks\nWireless sensor networks enable continuous monitoring...';
 </script>
 </body>
 </html>
