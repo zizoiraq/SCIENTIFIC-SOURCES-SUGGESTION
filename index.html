@@ -21,319 +21,267 @@
         .academic-header {
             background: linear-gradient(135deg, #0a2b3e 0%, #123b4f 100%);
             color: white;
-            padding: 2.2rem 2rem 1.8rem;
+            padding: 1.8rem 1.5rem 1.2rem;
             text-align: center;
             border-bottom: 5px solid #e6b422;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem;
         }
         .main-eng-header {
-            font-size: 1.9rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            letter-spacing: 1px;
             text-transform: uppercase;
-            font-family: 'Inter', 'Segoe UI', sans-serif;
-            word-break: keep-all;
         }
         .college-name {
-            font-size: 1.35rem;
+            font-size: 1.1rem;
             font-weight: 500;
-            letter-spacing: 0.3px;
-            border-top: 1px dashed rgba(255,255,240,0.3);
-            padding-top: 0.3rem;
+            margin-top: 0.2rem;
         }
         .dept-name {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 400;
-            background: rgba(230,180,34,0.18);
-            padding: 0.25rem 1rem;
+            background: rgba(230,180,34,0.2);
+            display: inline-block;
+            padding: 0.2rem 1rem;
             border-radius: 40px;
-            backdrop-filter: blur(2px);
+            margin-top: 0.3rem;
         }
         .designer-line {
-            margin-top: 0.9rem;
-            font-size: 0.85rem;
-            font-family: monospace;
-            letter-spacing: 0.5px;
-            opacity: 0.8;
-            border-top: 1px solid rgba(255,215,120,0.4);
-            padding-top: 0.5rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            opacity: 0.7;
         }
         .big-suggestion {
-            margin-top: 1rem;
-            font-size: 2.1rem;
+            margin-top: 0.3rem;
+            font-size: 1.5rem;
             font-weight: 800;
-            text-transform: uppercase;
             background: linear-gradient(135deg, #FFD966, #FFB347);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            letter-spacing: 2px;
-            font-family: 'Impact', 'Inter', sans-serif;
         }
 
         .container {
-            max-width: 1440px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+            max-width: 1400px;
+            margin: 1.2rem auto;
+            padding: 0 1rem;
         }
         .two-col-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
+            gap: 1.2rem;
+            margin-bottom: 1.2rem;
         }
         .card {
             background: white;
-            border-radius: 24px;
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
-            overflow: hidden;
-            transition: all 0.2s;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             border: 1px solid #e9e2d4;
+            overflow: hidden;
         }
         .card-header {
             background: #fef7e8;
-            padding: 1rem 1.5rem;
+            padding: 0.7rem 1rem;
             border-bottom: 2px solid #e6b422;
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #1e3b4a;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
         }
         .card-content {
-            padding: 1.5rem;
+            padding: 1rem;
         }
         textarea {
             width: 100%;
             border: 1.5px solid #ddd2bf;
-            border-radius: 20px;
-            padding: 1rem 1.2rem;
-            font-family: 'Courier New', 'Source Code Pro', monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            border-radius: 12px;
+            padding: 0.7rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            line-height: 1.5;
             background: #fefefb;
-            transition: 0.2s;
             resize: vertical;
         }
         textarea:focus {
             outline: none;
             border-color: #e6b422;
-            box-shadow: 0 0 0 3px rgba(230,180,34,0.2);
         }
         .controls {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             flex-wrap: wrap;
-            margin: 1rem 0 0.5rem;
+            margin: 0.8rem 0 0.3rem;
             align-items: center;
         }
-        .start-num-control {
+        .control-group {
             background: #f2ede5;
-            padding: 0.3rem 1rem;
+            padding: 0.2rem 0.8rem;
             border-radius: 40px;
             display: inline-flex;
             align-items: center;
-            gap: 0.7rem;
+            gap: 0.4rem;
         }
-        .start-num-control label {
+        .control-group label {
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
         }
-        .start-num-control input {
-            width: 70px;
-            padding: 0.3rem;
+        .control-group input, .control-group select {
+            width: 65px;
+            padding: 0.2rem;
             border-radius: 30px;
             border: 1px solid #c7b595;
             text-align: center;
-            font-weight: bold;
+            font-size: 0.75rem;
         }
         button {
             background: #1f5068;
             border: none;
-            padding: 0.6rem 1.3rem;
+            padding: 0.4rem 1rem;
             border-radius: 40px;
             font-weight: 600;
             color: white;
             cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: inherit;
+            font-size: 0.8rem;
         }
         button:hover {
             background: #123d50;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 12px rgba(0,0,0,0.1);
         }
         button.secondary {
             background: #b68b40;
         }
-        button.secondary:hover {
-            background: #9a6f30;
-        }
         .status-msg {
             background: #eef3f7;
-            border-radius: 40px;
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
-            margin: 0.8rem 0 0;
+            border-radius: 30px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.7rem;
+            margin: 0.5rem 0 0;
             font-family: monospace;
-            color: #1e4a5f;
         }
         .output-area {
             background: #fefcf8;
             border: 1.5px solid #e6ddcf;
-            border-radius: 20px;
-            padding: 1rem;
-            min-height: 320px;
+            border-radius: 12px;
+            padding: 0.7rem;
+            min-height: 350px;
             font-family: 'Georgia', serif;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             white-space: pre-wrap;
-            line-height: 1.65;
+            line-height: 1.5;
+            max-height: 500px;
+            overflow-y: auto;
         }
         .ref-section {
             background: #fffdf9;
-            border-radius: 28px;
+            border-radius: 16px;
             border: 1px solid #e3d9cd;
-            margin-top: 1.5rem;
-            padding: 1.2rem 1.5rem 1.8rem;
+            padding: 1rem;
         }
         .ref-header-flex {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             border-bottom: 2px solid #e6b422;
-            padding-bottom: 0.6rem;
+            padding-bottom: 0.4rem;
         }
         .ref-header-flex h2 {
-            font-size: 1.6rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            font-family: 'Inter', sans-serif;
             color: #1f3e4b;
         }
         .toggle-group {
             display: flex;
-            gap: 0.4rem;
+            gap: 0.2rem;
             background: #e9e2d4;
-            border-radius: 60px;
-            padding: 0.2rem;
+            border-radius: 40px;
+            padding: 0.1rem;
         }
         .toggle-group button {
             background: transparent;
             color: #2a4b5e;
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: 600;
+            padding: 0.2rem 0.7rem;
+            font-size: 0.65rem;
         }
         .toggle-group button.active {
             background: #1f5068;
             color: white;
-            box-shadow: none;
         }
         .ref-list {
-            max-height: 460px;
+            max-height: 350px;
             overflow-y: auto;
-            padding-right: 0.5rem;
         }
         .ref-item {
-            margin-bottom: 1rem;
-            padding: 0.9rem 1rem;
+            margin-bottom: 0.6rem;
+            padding: 0.5rem 0.7rem;
             background: #fefaf3;
-            border-left: 5px solid #e6b422;
-            border-radius: 18px;
-            font-size: 0.85rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            border-left: 4px solid #e6b422;
+            border-radius: 12px;
+            font-size: 0.75rem;
         }
         .ref-num {
             font-weight: 800;
             background: #1f5068;
             display: inline-block;
-            width: 30px;
+            width: 26px;
             text-align: center;
             color: white;
             border-radius: 30px;
-            font-size: 0.7rem;
-            margin-right: 0.7rem;
-            padding: 0.15rem 0;
-        }
-        .ref-text {
-            font-family: 'Georgia', serif;
-            color: #2c3e2f;
+            font-size: 0.6rem;
+            margin-right: 0.5rem;
+            padding: 0.1rem 0;
         }
         .copy-icon-btn {
             background: #e6b422;
-            padding: 0.4rem 1.2rem;
-            font-size: 0.7rem;
-            border-radius: 40px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.65rem;
         }
         .footer-note {
             text-align: center;
-            margin-top: 2rem;
-            font-size: 0.7rem;
+            margin-top: 1rem;
+            font-size: 0.6rem;
             color: #7a6a5a;
+            padding-top: 0.8rem;
             border-top: 1px solid #ddd0be;
-            padding-top: 1.5rem;
         }
-        @media (max-width: 800px) {
-            .two-col-grid { grid-template-columns: 1fr; gap: 1.2rem; }
-            .big-suggestion { font-size: 1.6rem; }
-            .main-eng-header { font-size: 1.4rem; }
+        @media (max-width: 750px) {
+            .two-col-grid { grid-template-columns: 1fr; }
         }
         .progress-bar {
-            height: 3px;
+            height: 2px;
             background: #e0cfb5;
-            border-radius: 5px;
-            margin-top: 8px;
-            width: 100%;
-            overflow: hidden;
+            border-radius: 2px;
+            margin-top: 6px;
         }
         .progress-fill {
             width: 0%;
             height: 100%;
             background: #e6b422;
-            transition: width 0.25s;
+            transition: width 0.2s;
         }
         .spinner {
             display: inline-block;
-            width: 16px;
-            height: 16px;
+            width: 12px;
+            height: 12px;
             border: 2px solid rgba(255,255,255,0.3);
             border-radius: 50%;
             border-top-color: white;
-            animation: spin 0.7s linear infinite;
+            animation: spin 0.6s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-        
         .heading-style {
             font-weight: 700;
             color: #1e3b4a;
-            margin-top: 1rem;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
+            margin-top: 0.6rem;
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
         }
         .subheading-style {
             font-weight: 600;
             color: #2c5a6e;
-            margin-top: 0.75rem;
-            margin-bottom: 0.25rem;
-            font-size: 1rem;
+            margin-top: 0.4rem;
+            margin-bottom: 0.1rem;
+            font-size: 0.85rem;
         }
         .paragraph-text {
-            margin-bottom: 0.75rem;
-            line-height: 1.6;
+            margin-bottom: 0.5rem;
         }
     </style>
 </head>
@@ -344,58 +292,62 @@
     <div class="college-name">Engineering Technical College - Mosul</div>
     <div class="dept-name">Chemical Industries & Petroleum Engineering Technologies</div>
     <div class="designer-line">Designed by: Azzam Essam</div>
-    <div class="big-suggestion">📘 SCIENTIFIC References SUGGESTION</div>
+    <div class="big-suggestion">📘 IEEE CITATION BUILDER</div>
 </header>
 
 <div class="container">
     <div class="two-col-grid">
         <div class="card">
-            <div class="card-header">
-                <span>📄</span> Academic Text (Preserves Headings & Structure)
-            </div>
+            <div class="card-header">📄 Academic Text</div>
             <div class="card-content">
-                <textarea id="inputText" rows="12" placeholder="Paste your scientific text with headings here.&#10;&#10;Example:&#10;Chapter Title: Reducing Marine Pollution Using Technology&#10;&#10;1. Introduction&#10;Marine pollution represents one of the most pressing environmental challenges..."></textarea>
+                <textarea id="inputText" rows="12" placeholder="Paste your text here..."></textarea>
                 <div class="controls">
-                    <div class="start-num-control">
-                        <label>🔢 Start citation [N] from:</label>
-                        <input type="number" id="startNum" value="1" min="1" max="200">
+                    <div class="control-group">
+                        <label>🔢 Start:</label>
+                        <input type="number" id="startNum" value="1" min="1">
                     </div>
-                    <button id="processBtn">🔍 Extract & Cite (IEEE)</button>
-                    <button id="clearBtn" class="secondary">🗑 Clear all</button>
+                    <div class="control-group">
+                        <label>📅 From year:</label>
+                        <input type="number" id="minYear" value="2015" min="1970" max="2026">
+                    </div>
+                    <div class="control-group">
+                        <label>📚 Sources/para:</label>
+                        <select id="sourcesPerPara">
+                            <option value="2">2</option>
+                            <option value="3" selected>3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <button id="processBtn">🔍 Extract & Cite</button>
+                    <button id="clearBtn" class="secondary">🗑 Clear</button>
                 </div>
-                <div class="status-msg" id="statusMsg">Ready. Enter text and click "Extract & Cite".</div>
-                <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+                <div class="status-msg" id="statusMsg">Ready. Click "Extract & Cite" to get references.</div>
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-header">
-                <span>📑</span> Text with IEEE inline citations [N]
-                <button id="copyTextBtn" class="copy-icon-btn" style="margin-left:auto; background:#b68b40;">📋 Copy Text</button>
-            </div>
+            <div class="card-header">📑 Text with Citations <button id="copyTextBtn" class="copy-icon-btn" style="float:right; margin-top:-2px;">📋 Copy</button></div>
             <div class="card-content">
-                <div class="output-area" id="outputWithCitations" style="min-height: 320px; overflow-y: auto;">Processed text with citation numbers will appear here (headings preserved, NO citations on headings).</div>
+                <div class="output-area" id="outputWithCitations">Processed text will appear here.<br>Headings preserved, citations only on paragraphs.</div>
             </div>
         </div>
     </div>
 
     <div class="ref-section">
         <div class="ref-header-flex">
-            <h2>📚 References (IEEE format)</h2>
-            <div style="display: flex; gap: 12px;">
-                <button id="copyRefBtn" class="copy-icon-btn" style="background:#1f5068;">📋 Copy references</button>
+            <h2>📚 References (IEEE)</h2>
+            <div style="display: flex; gap: 6px;">
+                <button id="copyRefBtn" class="copy-icon-btn">📋 Copy</button>
                 <div class="toggle-group">
-                    <button id="toggleIEEE" class="active">IEEE Style</button>
-                    <button id="toggleRaw">Raw JSON</button>
+                    <button id="toggleIEEE" class="active">IEEE</button>
+                    <button id="toggleRaw">Raw</button>
                 </div>
             </div>
         </div>
-        <div id="referencesContainer" class="ref-list">
-            <div style="color:#7c6b55; text-align:center; padding:2rem;">✨ No references yet — run extraction to fetch real scientific sources from Crossref.</div>
-        </div>
-        <div class="footer-note">
-            ⚡ IEEE Citation builder | Crossref API | Preserves all headings | NO citations on headings
-        </div>
+        <div id="referencesContainer" class="ref-list">✨ No references yet — click "Extract & Cite"</div>
+        <div class="footer-note">⚡ Crossref API | Filters: Year ≥ selected | Custom sources per paragraph</div>
     </div>
 </div>
 
@@ -406,41 +358,7 @@
     let currentView = "ieee";
     let outputSegmentsWithNumbers = [];
 
-    const safe = (val) => {
-        if (typeof val === 'string' && val.trim()) return val.trim();
-        if (Array.isArray(val) && val.length > 0 && val[0]) return String(val[0]).trim();
-        return null;
-    };
-    
     const delay = ms => new Promise(r => setTimeout(r, ms));
-
-    function formatAuthorsIEEE(authorList) {
-        if (!Array.isArray(authorList) || authorList.length === 0) return '';
-        
-        const getAuthorStr = (a) => {
-            if (!a) return '';
-            if (a.family && typeof a.family === 'string') {
-                let given = a.given;
-                if (given && typeof given === 'string') {
-                    let initials = given.split(/[\s\-\.]+/).map(p => p[0] ? p[0].toUpperCase() + '.' : '').filter(p => p).join(' ');
-                    return initials ? initials + ' ' + a.family : a.family;
-                }
-                return a.family;
-            }
-            if (a.name && typeof a.name === 'string') return a.name;
-            if (a.literal && typeof a.literal === 'string') return a.literal;
-            return '';
-        };
-        
-        let authors = authorList.map(getAuthorStr).filter(a => a && a.length > 0);
-        if (authors.length === 0) return '';
-        if (authors.length === 1) return authors[0] + ', ';
-        if (authors.length === 2) return authors[0] + ' and ' + authors[1] + ', ';
-        if (authors.length > 6) {
-            return authors.slice(0,3).join(', ') + ' et al., ';
-        }
-        return authors.slice(0, -1).join(', ') + ', and ' + authors[authors.length-1] + ', ';
-    }
 
     function extractYearFromSource(src) {
         try {
@@ -448,32 +366,53 @@
             for (let c of candidates) {
                 if (c && c['date-parts'] && Array.isArray(c['date-parts']) && c['date-parts'][0] && c['date-parts'][0][0]) {
                     let y = c['date-parts'][0][0];
-                    if (y && typeof y === 'number' && y > 1000 && y < 2100) return y;
+                    if (y && typeof y === 'number' && y > 1900 && y < 2100) return y;
                 }
             }
-            let match = JSON.stringify(src).match(/\b(19|20)\d{2}\b/);
-            return match ? parseInt(match[0]) : null;
-        } catch(e) {
             return null;
-        }
+        } catch(e) { return null; }
+    }
+
+    function formatAuthorsIEEE(authorList) {
+        if (!Array.isArray(authorList) || authorList.length === 0) return '';
+        const getAuthorStr = (a) => {
+            if (!a) return '';
+            if (a.family) {
+                let given = a.given;
+                if (given) {
+                    let initials = given.split(/[\s\-\.]+/).map(p => p[0] ? p[0].toUpperCase() + '.' : '').filter(p => p).join(' ');
+                    return initials ? initials + ' ' + a.family : a.family;
+                }
+                return a.family;
+            }
+            if (a.name) return a.name;
+            if (a.literal) return a.literal;
+            return '';
+        };
+        let authors = authorList.map(getAuthorStr).filter(a => a);
+        if (authors.length === 0) return '';
+        if (authors.length === 1) return authors[0] + ', ';
+        if (authors.length === 2) return authors[0] + ' and ' + authors[1] + ', ';
+        if (authors.length > 6) return authors.slice(0,3).join(', ') + ' et al., ';
+        return authors.slice(0, -1).join(', ') + ', and ' + authors[authors.length-1] + ', ';
     }
 
     function buildIEEEString(src, htmlMode = false) {
         try {
             const authors = formatAuthorsIEEE(src.author);
-            let title = safe(src.title) || safe(src['short-title']) || 'Untitled Article';
-            let container = safe(src['container-title']) || safe(src['short-container-title']) || 'Journal';
-            const volume = safe(src.volume);
-            const issue = safe(src.issue);
+            let title = src.title || src['short-title'] || 'Untitled';
+            let container = src['container-title'] || src['short-container-title'] || 'Journal';
+            const volume = src.volume;
+            const issue = src.issue;
             let pages = '';
-            if (safe(src.page)) pages = 'pp. ' + src.page.replace(/\s+/g, '');
-            else if (safe(src['article-number'])) pages = 'Art. no. ' + src['article-number'];
+            if (src.page) pages = 'pp. ' + src.page;
+            else if (src['article-number']) pages = 'Art. no. ' + src['article-number'];
             const year = extractYearFromSource(src);
             let yearStr = year ? year.toString() : 'n.d.';
-            const doi = src.DOI ? src.DOI : null;
+            const doi = src.DOI;
 
             let parts = [];
-            if (authors && authors.length > 0) parts.push(authors);
+            if (authors) parts.push(authors);
             let titlePart = htmlMode ? `“${title},”` : `"${title},"`;
             parts.push(titlePart);
             let journalPart = htmlMode ? `<em>${container}</em>` : container;
@@ -485,182 +424,133 @@
             if (volIssue.length) parts.push(volIssue.join(', '));
             parts.push(yearStr);
             let citation = parts.join(', ') + '.';
-            if (doi) {
-                let doiLink = htmlMode ? ` doi: <a href="https://doi.org/${doi}" target="_blank">${doi}</a>` : ` doi: ${doi}`;
-                citation += doiLink;
-            }
+            if (doi) citation += ` doi: ${doi}`;
             return citation;
-        } catch(e) {
-            console.error('Error building IEEE string:', e);
-            return 'Citation information unavailable';
-        }
+        } catch(e) { return 'Citation info unavailable'; }
     }
 
-    const STOPWORDS = new Set(['the','a','an','and','or','but','in','on','at','to','for','of','with','by','from','as','is','was','are','were','been','be','have','has','had','this','that','these','those','it','its','they','them','their','we','our','us','research','study','paper','article','analysis','results','data','method','approach','technique','used','using','based','show','shown','also','such','more','into','can','about','which','when','many','some','well','each','use','new','high','very','between','both','would','could','should','over','after','being','will','than','other']);
+    const STOPWORDS = new Set(['the','a','an','and','or','but','in','on','at','to','for','of','with','by','from','as','is','was','are','were','been','be','have','has','had','this','that','these','those','it','its','they','them','their','we','our','us','research','study','paper','article','analysis','results','data','method','approach','technique','used','using','based','show','shown','also','such','more','into','can','about','which','when','many','some','well','each','use','new','high','very']);
 
-    function extractKeywordsFromText(text) {
-        const words = text.toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/);
+    function extractKeywords(text) {
+        let words = text.toLowerCase().replace(/[^\w\s]/g, ' ').split(/\s+/);
         let freq = {};
         words.forEach(w => {
             if (w.length > 3 && !STOPWORDS.has(w)) freq[w] = (freq[w] || 0) + 1;
         });
-        return Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,12).map(e=>e[0]);
+        return Object.entries(freq).sort((a,b)=>b[1]-a[1]).slice(0,8).map(e=>e[0]);
     }
 
-    async function searchCrossrefByKeywords(keywords, maxRet = 5) {
+    // Improved search function with retry and better query
+    async function searchCrossref(keywords, maxResults, minYear) {
+        let mainKeywords = keywords.slice(0, 4);
+        if (mainKeywords.length === 0) mainKeywords = ['marine', 'pollution', 'technology'];
+        
+        let query = encodeURIComponent(mainKeywords.join(' '));
+        let url = `https://api.crossref.org/works?query=${query}&rows=${maxResults * 2}&sort=relevance&filter=type:journal-article`;
+        
         try {
-            let query = encodeURIComponent(keywords.slice(0,5).join(' '));
-            let url = `https://api.crossref.org/works?query=${query}&rows=${maxRet}&sort=relevance&filter=type:journal-article`;
             let resp = await fetch(url);
             if (!resp.ok) return [];
             let data = await resp.json();
-            return data.message?.items || [];
-        } catch(e) { 
-            console.error('Crossref search error:', e);
-            return []; 
+            let items = data.message?.items || [];
+            
+            // Filter by year locally for better accuracy
+            let filtered = items.filter(item => {
+                if (!minYear) return true;
+                let year = extractYearFromSource(item);
+                return year && year >= minYear;
+            });
+            
+            return filtered.slice(0, maxResults);
+        } catch(e) {
+            console.error('Crossref error:', e);
+            return [];
         }
     }
 
-    async function enrichWithDOI(doi) {
-        try {
-            let r = await fetch(`https://api.crossref.org/works/${encodeURIComponent(doi)}`);
-            if (!r.ok) return null;
-            let d = await r.json();
-            return d.message || null;
-        } catch(e) { 
-            console.error('DOI enrichment error:', e);
-            return null; 
-        }
-    }
-
-    function hasValidAuthors(item) {
-        return Array.isArray(item.author) && item.author.length > 0 && item.author.some(a => a && (a.family || a.name));
-    }
-
-    async function findRelevantSources(keywords, limit=3) {
-        let results = await searchCrossrefByKeywords(keywords, 6);
-        let validItems = [];
-        let seenDoi = new Set();
+    async function getSourcesForParagraph(keywords, limit, minYear) {
+        let results = await searchCrossref(keywords, limit + 2, minYear);
+        let valid = [];
+        let seen = new Set();
+        
         for (let item of results) {
-            if (validItems.length >= limit) break;
+            if (valid.length >= limit) break;
             let doi = item.DOI;
-            if (!doi || seenDoi.has(doi)) continue;
-            seenDoi.add(doi);
-            let enriched = item;
-            if (!hasValidAuthors(item)) {
-                let full = await enrichWithDOI(doi);
-                if (full && hasValidAuthors(full)) enriched = full;
-                await delay(180);
+            if (!doi || seen.has(doi)) continue;
+            
+            // Check if has valid authors
+            let hasAuthors = Array.isArray(item.author) && item.author.length > 0 && item.author.some(a => a.family || a.name);
+            
+            if (hasAuthors) {
+                seen.add(doi);
+                valid.push({ source: item, matchedKeywords: keywords.slice(0,4) });
             }
-            if (hasValidAuthors(enriched)) {
-                validItems.push({ source: enriched, matchedKeywords: keywords.slice(0,5) });
+            await delay(50);
+        }
+        
+        // If not enough results, try with broader keywords
+        if (valid.length < limit && keywords.length > 2) {
+            let broader = keywords.slice(0, 2);
+            let moreResults = await searchCrossref(broader, limit - valid.length + 2, minYear);
+            for (let item of moreResults) {
+                if (valid.length >= limit) break;
+                let doi = item.DOI;
+                if (!doi || seen.has(doi)) continue;
+                if (Array.isArray(item.author) && item.author.length > 0) {
+                    seen.add(doi);
+                    valid.push({ source: item, matchedKeywords: broader });
+                }
+                await delay(50);
             }
         }
-        return validItems;
+        
+        return valid;
     }
 
-    // Improved function to detect if a line is a heading (with high accuracy)
-    function isHeadingLine(line) {
-        let trimmed = line.trim();
-        
-        // Empty lines are not headings
-        if (trimmed === "") return false;
-        
-        // Pattern 1: Numbered headings like "1.", "1.1", "2.5", "1. Introduction", "2.1 Wireless Sensor Networks"
-        if (trimmed.match(/^(\d+(\.\d+)*\.?)\s+[A-Za-z]/)) {
-            return true;
-        }
-        
-        // Pattern 2: Chapter titles like "Chapter Title: ..."
-        if (trimmed.match(/^(Chapter|Section)\s+\d+\.?\s*:/i)) {
-            return true;
-        }
-        
-        // Pattern 3: Layer titles like "Layer 1: Sensing Layer", "Layer 2: Communication Layer"
-        if (trimmed.match(/^(Layer|Level)\s+\d+:/i)) {
-            return true;
-        }
-        
-        // Pattern 4: Titles that end with colon and are short (like "Computer Vision Models:")
-        if (trimmed.match(/^[A-Z][a-z]+(\s+[A-Z][a-z]+)*\s*:$/) && trimmed.length < 60) {
-            return true;
-        }
-        
-        // Pattern 5: Short titles (less than 50 chars, less than 6 words, starts with capital, no period at end)
-        if (trimmed.length < 50 && 
-            trimmed.split(/\s+/).length <= 6 && 
-            !trimmed.endsWith('.') &&
-            !trimmed.includes('[') &&
-            trimmed.match(/^[A-Z]/) &&
-            !trimmed.match(/^(the|a|an|in|on|at|for|with|by|from)\s/i)) {
-            return true;
-        }
-        
-        // Pattern 6: All caps titles like "INTRODUCTION" or "WIRELESS SENSOR NETWORKS"
-        if (trimmed === trimmed.toUpperCase() && trimmed.length > 3 && trimmed.length < 60 && trimmed.split(/\s+/).length <= 8) {
-            return true;
-        }
-        
+    function isHeading(line) {
+        let t = line.trim();
+        if (!t) return false;
+        if (t.match(/^(\d+(\.\d+)*\.?)\s+[A-Za-z]/)) return true;
+        if (t.match(/^(Chapter|Section|Layer|Level)\s+\d+\.?\s*:?/i)) return true;
+        if (t.match(/^[A-Z][a-z]+(\s+[A-Z][a-z]+)*\s*:$/) && t.length < 60) return true;
+        if (t.length < 50 && t.split(/\s+/).length <= 6 && !t.endsWith('.') && !t.includes('[') && t.match(/^[A-Z]/)) return true;
+        if (t === t.toUpperCase() && t.length > 3 && t.length < 60 && t.split(/\s+/).length <= 8) return true;
         return false;
     }
 
-    // Split text while preserving each line/segment
-    function splitIntoLinesPreservingStructure(fullText) {
-        let lines = fullText.split(/\r?\n/);
+    function splitIntoSegments(text) {
+        let lines = text.split(/\r?\n/);
         let segments = [];
-        let currentSegment = "";
+        let current = "";
         
-        for (let i = 0; i < lines.length; i++) {
-            let line = lines[i];
-            let trimmedLine = line.trim();
-            
-            // Skip empty lines - they act as separators
-            if (trimmedLine === "") {
-                if (currentSegment !== "") {
-                    segments.push(currentSegment);
-                    currentSegment = "";
-                }
+        for (let line of lines) {
+            let trimmed = line.trim();
+            if (trimmed === "") {
+                if (current) { segments.push(current); current = ""; }
                 continue;
             }
-            
-            // Check if this line is a heading
-            let isHeading = isHeadingLine(line);
-            
-            // If this is a heading and we have a current segment, save it first
-            if (isHeading && currentSegment !== "") {
-                segments.push(currentSegment);
-                currentSegment = trimmedLine;
-            }
-            // If this is a heading and no current segment, start new
-            else if (isHeading && currentSegment === "") {
-                currentSegment = trimmedLine;
-            }
-            // Otherwise, append to current segment
-            else {
-                if (currentSegment === "") {
-                    currentSegment = trimmedLine;
-                } else {
-                    currentSegment += " " + trimmedLine;
-                }
+            if (isHeading(line)) {
+                if (current) { segments.push(current); current = ""; }
+                segments.push(trimmed);
+            } else {
+                current = current ? current + " " + trimmed : trimmed;
             }
         }
-        
-        // Add the last segment if exists
-        if (currentSegment !== "") {
-            segments.push(currentSegment);
-        }
-        
+        if (current) segments.push(current);
         return segments;
     }
 
-    async function processTextToCitations() {
+    async function processText() {
         let rawText = document.getElementById('inputText').value.trim();
         if (!rawText) {
-            document.getElementById('statusMsg').innerHTML = '⚠️ Please enter academic text.';
+            document.getElementById('statusMsg').innerHTML = '⚠️ Please enter text.';
             return;
         }
-        let startVal = parseInt(document.getElementById('startNum').value, 10);
-        if (isNaN(startVal) || startVal < 1) startVal = 1;
+        
+        let startVal = parseInt(document.getElementById('startNum').value) || 1;
+        let minYear = parseInt(document.getElementById('minYear').value) || 1970;
+        let sourcesPerPara = parseInt(document.getElementById('sourcesPerPara').value) || 3;
+        
         nextCiteNumber = startVal;
         allReferences = [];
         segmentsData = [];
@@ -669,130 +559,100 @@
         const statusSpan = document.getElementById('statusMsg');
         const processBtn = document.getElementById('processBtn');
         processBtn.disabled = true;
-        processBtn.innerHTML = '<span class="spinner"></span> Processing & Searching...';
+        processBtn.innerHTML = '<span class="spinner"></span> Searching...';
         progressFill.style.width = '5%';
         
         try {
-            // Split text while preserving headings as separate segments
-            let segments = splitIntoLinesPreservingStructure(rawText);
+            statusSpan.innerHTML = `📅 Year ≥ ${minYear} | 📚 ${sourcesPerPara} sources/paragraph | Searching...`;
             
-            if (segments.length === 0) throw new Error('No text segments found.');
-            statusSpan.innerHTML = `📄 ${segments.length} segments detected. Analyzing...`;
-            progressFill.style.width = '10%';
+            let segments = splitIntoSegments(rawText);
+            statusSpan.innerHTML = `📄 ${segments.length} segments found. Processing...`;
+            progressFill.style.width = '15%';
             
-            let newSegmentsData = [];
-            let totalRefMap = new Map();
+            let newSegments = [];
+            let refMap = new Map();
+            let paraCount = 0;
             
-            for (let idx = 0; idx < segments.length; idx++) {
-                let segment = segments[idx];
+            for (let i = 0; i < segments.length; i++) {
+                let seg = segments[i];
+                let isHead = isHeading(seg);
                 
-                // Check if this segment is a heading (using the improved function)
-                let isHeading = isHeadingLine(segment);
-                
-                if (isHeading) {
-                    // Headings get NO citations
-                    newSegmentsData.push({ 
-                        text: segment, 
-                        citations: [], 
-                        isHeading: true,
-                        keywords: []
-                    });
-                    statusSpan.innerHTML = `📌 Preserving heading ${idx+1}/${segments.length}: ${segment.substring(0, 50)}...`;
+                if (isHead) {
+                    newSegments.push({ text: seg, citations: [], isHeading: true });
                     continue;
                 }
                 
-                // For regular text segments (paragraphs), check if it's a short text that shouldn't get citations
-                let wordCount = segment.split(/\s+/).length;
-                
-                // If it's too short (less than 15 words), treat as subheading or short description - NO citations
-                if (wordCount < 15) {
-                    newSegmentsData.push({ 
-                        text: segment, 
-                        citations: [], 
-                        isHeading: false,
-                        isShort: true,
-                        keywords: []
-                    });
+                let wordCount = seg.split(/\s+/).length;
+                if (wordCount < 12) {
+                    newSegments.push({ text: seg, citations: [], isHeading: false, isShort: true });
                     continue;
                 }
                 
-                // This is a proper paragraph - extract keywords and find sources
-                statusSpan.innerHTML = `🔍 Processing paragraph ${idx+1}/${segments.length}...`;
+                paraCount++;
+                statusSpan.innerHTML = `🔍 Processing paragraph ${paraCount}... (${i+1}/${segments.length})`;
+                progressFill.style.width = 15 + (i / segments.length) * 70 + '%';
                 
-                let keywords = extractKeywordsFromText(segment);
-                if (keywords.length < 2) keywords = [...keywords, 'science', 'technology', 'marine', 'pollution', 'environmental'];
-                progressFill.style.width = 10 + (idx / segments.length) * 70 + '%';
+                let keywords = extractKeywords(seg);
+                if (keywords.length < 2) keywords = ['marine', 'pollution', 'environmental', 'technology'];
                 
-                let sources = await findRelevantSources(keywords, 3);
-                await delay(150);
+                let sources = await getSourcesForParagraph(keywords, sourcesPerPara, minYear);
+                await delay(80);
                 
-                let citationsForSegment = [];
-                for (let srcItem of sources) {
-                    let doiKey = srcItem.source.DOI;
-                    let existingRef = null;
-                    if (doiKey) existingRef = totalRefMap.get(doiKey);
-                    if (existingRef) {
-                        citationsForSegment.push({ num: existingRef.num });
+                let citations = [];
+                for (let src of sources) {
+                    let doiKey = src.source.DOI;
+                    let existing = refMap.get(doiKey);
+                    if (existing) {
+                        citations.push({ num: existing.num });
                     } else {
                         let newNum = nextCiteNumber++;
-                        let newRef = { num: newNum, source: srcItem.source, matchedKeywords: srcItem.matchedKeywords };
+                        let newRef = { num: newNum, source: src.source, matchedKeywords: src.matchedKeywords };
                         allReferences.push(newRef);
-                        if (doiKey) totalRefMap.set(doiKey, newRef);
-                        citationsForSegment.push({ num: newNum });
+                        if (doiKey) refMap.set(doiKey, newRef);
+                        citations.push({ num: newNum });
                     }
                 }
                 
-                newSegmentsData.push({ 
-                    text: segment, 
-                    citations: citationsForSegment, 
-                    isHeading: false,
-                    isShort: false,
-                    keywords: keywords 
-                });
-                progressFill.style.width = 10 + ((idx+1) / segments.length) * 70 + '%';
+                newSegments.push({ text: seg, citations: citations, isHeading: false });
             }
             
-            segmentsData = newSegmentsData;
+            segmentsData = newSegments;
             
-            // Build output with preserved structure
             let outputLines = [];
             for (let seg of segmentsData) {
                 if (seg.isHeading) {
                     outputLines.push(seg.text);
                 } else {
-                    // Only add citations if it's not a short segment and has citations
                     let nums = seg.citations.map(c => `[${c.num}]`).join(' ');
-                    let suffix = (nums.length && seg.citations.length > 0) ? ` ${nums}` : '';
-                    outputLines.push(seg.text + suffix);
+                    outputLines.push(seg.text + (nums ? ' ' + nums : ''));
                 }
             }
             outputSegmentsWithNumbers = outputLines;
             
             // Display with formatting
-            let displayHtml = outputLines.map(line => {
-                // Check if line looks like a heading for styling
-                if (isHeadingLine(line)) {
+            let html = outputLines.map(line => {
+                if (isHeading(line)) {
                     if (line.match(/^(\d+(\.\d+)*\.?)\s+[A-Za-z]/)) {
                         return `<div class="heading-style">${escapeHtml(line)}</div>`;
-                    } else if (line.match(/^(Layer|Chapter|Section)\s+\d+:/i)) {
-                        return `<div class="subheading-style">${escapeHtml(line)}</div>`;
                     }
                     return `<div class="subheading-style">${escapeHtml(line)}</div>`;
                 }
                 return `<div class="paragraph-text">${escapeHtml(line)}</div>`;
             }).join('');
-            document.getElementById('outputWithCitations').innerHTML = displayHtml;
+            document.getElementById('outputWithCitations').innerHTML = html;
             
-            renderReferencesView();
-            statusSpan.innerHTML = `✅ Done! ${allReferences.length} unique references extracted. ${segmentsData.filter(s => !s.isHeading && s.citations.length > 0).length} paragraphs cited. Headings preserved with NO citations.`;
+            renderReferences();
+            
+            statusSpan.innerHTML = `✅ Done! ${allReferences.length} unique references found. ${paraCount} paragraphs cited. Year ≥ ${minYear}, ${sourcesPerPara} sources/paragraph.`;
             progressFill.style.width = '100%';
-            setTimeout(()=> { progressFill.style.width = '0%'; }, 800);
+            setTimeout(() => { progressFill.style.width = '0%'; }, 500);
+            
         } catch (err) {
             statusSpan.innerHTML = `❌ Error: ${err.message}`;
             console.error(err);
         } finally {
             processBtn.disabled = false;
-            processBtn.innerHTML = '🔍 Extract & Cite (IEEE)';
+            processBtn.innerHTML = '🔍 Extract & Cite';
         }
     }
     
@@ -806,77 +666,76 @@
         });
     }
     
-    function renderReferencesView() {
-        const container = document.getElementById('referencesContainer');
+    function renderReferences() {
+        let container = document.getElementById('referencesContainer');
         if (!allReferences.length) {
-            container.innerHTML = '<div style="color:#7c6b55; text-align:center; padding:2rem;">📭 No references generated. Process your text first.</div>';
+            container.innerHTML = '<div style="color:#7c6b55; text-align:center; padding:1rem;">📭 No references found. Try different text or lower year filter.</div>';
             return;
         }
         let html = '';
-        allReferences.sort((a,b)=> a.num - b.num);
+        allReferences.sort((a,b)=>a.num - b.num);
         for (let ref of allReferences) {
             if (currentView === 'ieee') {
-                let ieeeHtml = buildIEEEString(ref.source, true);
-                html += `<div class="ref-item"><span class="ref-num">[${ref.num}]</span> <span class="ref-text">${ieeeHtml}</span></div>`;
+                html += `<div class="ref-item"><span class="ref-num">[${ref.num}]</span> ${buildIEEEString(ref.source, true)}</div>`;
             } else {
-                let rawJson = JSON.stringify(ref.source, null, 2);
-                let matchedStr = (ref.matchedKeywords || []).slice(0,6).join(', ');
-                html += `<div class="ref-item"><span class="ref-num">[${ref.num}]</span> <strong>RAW Crossref record</strong><br><pre style="background:#f2e8da; padding:0.6rem; border-radius:14px; font-size:0.7rem; margin-top:0.4rem; overflow-x:auto;">${escapeHtml(rawJson.substring(0, 1200))}${rawJson.length > 1200 ? '…' : ''}</pre><div style="font-size:0.7rem; margin-top:0.3rem;">🔑 matched keywords: ${matchedStr || '—'}</div></div>`;
+                html += `<div class="ref-item"><span class="ref-num">[${ref.num}]</span> <pre style="font-size:0.65rem; overflow-x:auto;">${escapeHtml(JSON.stringify(ref.source, null, 2).substring(0, 800))}</pre></div>`;
             }
         }
         container.innerHTML = html;
     }
     
-    function getPlainAllReferences() {
+    function getPlainReferences() {
         if (!allReferences.length) return '';
         let plain = '';
-        allReferences.sort((a,b)=> a.num - b.num).forEach(ref => {
+        allReferences.sort((a,b)=>a.num - b.num).forEach(ref => {
             if (currentView === 'ieee') plain += `[${ref.num}] ${buildIEEEString(ref.source, false)}\n\n`;
-            else plain += `[${ref.num}] RAW JSON:\n${JSON.stringify(ref.source, null, 2)}\n\n`;
+            else plain += `[${ref.num}] RAW:\n${JSON.stringify(ref.source, null, 2)}\n\n`;
         });
         return plain.trim();
     }
     
-    function copyToClipboard(text, btnElement) {
+    function copyToClipboard(text, btn) {
         if (!text) return;
         navigator.clipboard.writeText(text).then(() => {
-            let old = btnElement.innerHTML;
-            btnElement.innerHTML = '✓ Copied!';
-            setTimeout(() => { btnElement.innerHTML = old; }, 1500);
-        }).catch(() => alert("Could not copy"));
+            let old = btn.innerHTML;
+            btn.innerHTML = '✓ Copied!';
+            setTimeout(() => { btn.innerHTML = old; }, 1200);
+        });
     }
     
-    document.getElementById('processBtn').addEventListener('click', processTextToCitations);
+    document.getElementById('processBtn').addEventListener('click', processText);
     document.getElementById('clearBtn').addEventListener('click', () => {
         document.getElementById('inputText').value = '';
-        document.getElementById('outputWithCitations').innerHTML = 'Processed text with citation numbers will appear here (headings preserved, NO citations on headings).';
-        document.getElementById('referencesContainer').innerHTML = '<div style="color:#7c6b55; text-align:center; padding:2rem;">✨ No references yet — run extraction.</div>';
-        allReferences = []; segmentsData = []; nextCiteNumber = 1;
+        document.getElementById('outputWithCitations').innerHTML = 'Processed text will appear here.';
+        document.getElementById('referencesContainer').innerHTML = '✨ No references yet — click "Extract & Cite"';
+        allReferences = []; segmentsData = [];
         document.getElementById('statusMsg').innerHTML = 'Cleared. Ready.';
         document.getElementById('progressFill').style.width = '0%';
     });
     document.getElementById('copyTextBtn').addEventListener('click', function() {
-        let finalText = outputSegmentsWithNumbers.join('\n\n');
-        if (!finalText || finalText.includes('Processed text')) { alert('No processed text yet.'); return; }
-        copyToClipboard(finalText, this);
+        if (!outputSegmentsWithNumbers.length) { alert('No text processed yet.'); return; }
+        copyToClipboard(outputSegmentsWithNumbers.join('\n\n'), this);
     });
     document.getElementById('copyRefBtn').addEventListener('click', function() {
-        let refPlain = getPlainAllReferences();
-        if (!refPlain) { alert('No references to copy'); return; }
-        copyToClipboard(refPlain, this);
+        let refs = getPlainReferences();
+        if (!refs) { alert('No references.'); return; }
+        copyToClipboard(refs, this);
     });
     document.getElementById('toggleIEEE').addEventListener('click', () => {
         currentView = 'ieee';
         document.getElementById('toggleIEEE').classList.add('active');
         document.getElementById('toggleRaw').classList.remove('active');
-        renderReferencesView();
+        renderReferences();
     });
     document.getElementById('toggleRaw').addEventListener('click', () => {
         currentView = 'raw';
         document.getElementById('toggleRaw').classList.add('active');
         document.getElementById('toggleIEEE').classList.remove('active');
-        renderReferencesView();
+        renderReferences();
     });
+    
+    // Set example
+    document.getElementById('inputText').placeholder = '1. Introduction\nMarine pollution is a critical environmental challenge...\n\n2.1 Wireless Sensor Networks\nWireless sensor networks enable continuous monitoring...';
 </script>
 </body>
 </html>
